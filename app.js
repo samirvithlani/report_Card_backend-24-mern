@@ -12,7 +12,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/report-card-app-mern24').then(() => 
 }).catch(err => console.log(err));
 
 const studentRoutes = require('./src/routes/studentRoutes');
+const facultyRoutes = require("./src/routes/facultyRoutes")
 app.use('/student', studentRoutes);
+app.use("/faculty",facultyRoutes)
 
 
 const PORT = 3000

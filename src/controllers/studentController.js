@@ -1,6 +1,8 @@
 const studentSchema = require("../models/studentModel");
 const multer = require("multer");
 const xlsx = require("xlsx");
+const facultySchema = require("../models/facultyModel");
+const studentModel = require("../models/studentModel");
 
 
 const storage = multer.diskStorage({
@@ -26,7 +28,7 @@ const readDataFromExcell = (file)=>{
 
 const createStudentFromExcel = (req, res) => {
 
-    upload(req,res,(err)=>{
+    upload(req,res,async(err)=>{
         if(err){
             res.status(500).json({
                 message:"Error in uploading file",
@@ -38,17 +40,34 @@ const createStudentFromExcel = (req, res) => {
             const facultyEmail = req.body.facultyEmail;
             console.log(facultyEmail);
 
+            const foundFaculty = await facultySchema.findOne({email:facultyEmail})
+            console.log(foundFaculty)
+
             //find faculty by email
             //const faculty = facultySchema.findOne({email:facultyEmail});
             //facultyEmail._id : 13r6yshckjhadhyuosjds
             //if faculty found.... else no faculty found
             const studentData = readDataFromExcell(req.file.path);
-            console.log(studentData);
+            //console.log(studentData);
             //bind facultyId to every record
             ///store student data in database
+
+            const studentObj = studentData.map((stu)=>{
+                return({
+                    ...stu,
+                    faculty:foundFaculty._id
+
+                })
+            })
+
+            //console.log(studentObj)
+
+            const savedStudents = await studentSchema.insertMany(studentObj)
+            console.log(savedStudents)
+
             res.json({
                 message:"File uploaded successfully",
-                data:studentData
+                data:studentObj
             })
         }
     })
