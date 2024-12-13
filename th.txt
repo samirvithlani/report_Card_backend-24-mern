@@ -1,0 +1,16 @@
+models:
+faculty model
+student model
+stu report model
+
+
+page:login -->faculty 
+
+dashboard... search student name:
+
+
+faculty login: --> return jwt token --> frontend --> jwt tokem --.cookies -->
+ -->requirement faculty id --> retrive id from token --> sep API
+ pass token in header --> get faculty data from token..
+
+
