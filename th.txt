@@ -14,3 +14,13 @@ faculty login: --> return jwt token --> frontend --> jwt tokem --.cookies -->
  pass token in header --> get faculty data from token..
 
 
+
+frontend : login --> token -->cookies -->
+
+redirect -->dashobioard ---> useEfect = (api -> getuser from token --> )
+get("url",{
+    headers:{
+        Auth:cokkies.get("token")
+    }
+})
+
